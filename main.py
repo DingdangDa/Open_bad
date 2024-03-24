@@ -9,6 +9,21 @@ from datetime import date, timedelta
 # 乒乓球siteId 4007243990b243938283ce51ea5af072
 # 羽毛球siteId e1f5c85e86c34c46a2d0935452094b77
 
+def post_newsType():
+    res = requests.post(url='http://wechat.njust.edu.cn/api/v2/appGymMicroportal/newsType/search',
+                        headers={"Connection": "keep-alive",
+                                 "Content-Length": "2",
+                                 "Accept": "application/json, text/plain, */*",
+                                 "User-Agent": "Mozilla/5.0 (Linux; Android 12; XQ-AT72 Build/58.2.A.10.44A; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/116.0.0.0 Mobile Safari/537.36 XWEB/1160065 MMWEBSDK/20231202 MMWEBID/9055 MicroMessenger/8.0.47.2560(0x28002F50) WeChat/arm64 Weixin NetType/4G Language/zh_CN ABI/arm64",
+                                 "Content-Type": "application/json",
+                                 "X-Requested-With": "com.tencent.mm",
+                                 "Referer": "http://wechat.njust.edu.cn/wechat/gymMicroportal/gymMicroportal.html",
+                                 "Accept-Encoding": "gzip, deflate",
+                                 "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+                                 "Cookie": Cookie
+                                 },
+                        json={})
+
 def ask_bad():  # 申请场信息
     global localtime
     ask_time = time.strftime("%m-%d %H:%M:%S")
@@ -190,6 +205,10 @@ ask_ctrl_thread_start = 0  # 标记是否开启了线程ask_ctrl_thread
 BookJustNow = 0  # 标记循环里是不是订了场
 BookNum = 1
 
+Cookie = ""
+# Cookie: TGC=TGT-8f357dfadf3f4b5f9708a7b8ea85ae78; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub3ciOjE3MTEyNTYyMjgsIm90Ijoid2VjaGF0X3F5IiwidHQiOiJkYXRhYmFzZSIsInQiOiI5MjAxMDQwRzEyMjMiLCJleHAiOjE3MTEyNTk4MjgsIm8iOiI5MjAxMDQwRzEyMjMifQ.uGoHFvOabqG0qbIHSWU1qOgW9OHdKkwJLsDoltb4c5I
+
+
 res = requests.get(url='http://wechat.njust.edu.cn/gymMicroportal/gymMicroportal.html?i=1',
                         headers={"Connection": "keep-alive",
                                  "Upgrade-Insecure-Requests": "1",
@@ -215,6 +234,9 @@ headers_dic = eval(headers)
 print(headers_dic['Set-Cookie'])
 
 while 1:
+    if localtime[3] == 7 and 59 <= localtime[4]:  # 早上7:59
+        post_newsType()
+
     if localtime[3] == 8 and 0 <= localtime[4] <= 2:  # 早上8:00-8:02
     # if 1:
 
@@ -224,11 +246,8 @@ while 1:
             ask_ctrl_thread.start()
             ask_ctrl_thread_start = 1
 
-        if data.areaBack.endswith('null}', 0, len(data.areaBack)) == 1:  # 如果获取到了场信息
+        if data.areaBack.endswith('t": 0}]}', 0, len(data.areaBack)) == 1:  # 如果获取到了场信息
             data_dic = json.loads(data.areaBack)  # 解析返回数据json
-
-
-
 
             # 订场
             for BadBookTime in BadBookTimeList:  # 在要抢的时间范围内
@@ -245,8 +264,6 @@ while 1:
                         BookJustNow = 1
 
                         break  # 跳出去，去订下一个时间段，避免盯着一个时间段订
-
-
 
             for BookSuccess in BookSuccessList:
                 print("Person", int(BookSuccess / 10000), "订到了", int(BookSuccess / 100 - BookSuccess / 10000 * 100 + 8), "点开始", BookSuccess - int(BookSuccess / 10000) * 10000 + 1, "号场")

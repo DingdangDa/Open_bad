@@ -205,7 +205,7 @@ ask_ctrl_thread_start = 0  # 标记是否开启了线程ask_ctrl_thread
 BookJustNow = 0  # 标记循环里是不是订了场
 BookNum = 1
 
-Cookie = ""
+Cookie = "TGC=TGT-8f357dfadf3f4b5f9708a7b8ea85ae78; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub3ciOjE3MTEyNTYyMjgsIm90Ijoid2VjaGF0X3F5IiwidHQiOiJkYXRhYmFzZSIsInQiOiI5MjAxMDQwRzEyMjMiLCJleHAiOjE3MTEyNTk4MjgsIm8iOiI5MjAxMDQwRzEyMjMifQ.uGoHFvOabqG0qbIHSWU1qOgW9OHdKkwJLsDoltb4c5I"
 # Cookie: TGC=TGT-8f357dfadf3f4b5f9708a7b8ea85ae78; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJub3ciOjE3MTEyNTYyMjgsIm90Ijoid2VjaGF0X3F5IiwidHQiOiJkYXRhYmFzZSIsInQiOiI5MjAxMDQwRzEyMjMiLCJleHAiOjE3MTEyNTk4MjgsIm8iOiI5MjAxMDQwRzEyMjMifQ.uGoHFvOabqG0qbIHSWU1qOgW9OHdKkwJLsDoltb4c5I
 
 
